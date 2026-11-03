@@ -1,0 +1,3 @@
+<?php require_once __DIR__.'/../../app/bootstrap.php';$me=user();
+if($_SERVER['REQUEST_METHOD']==='GET'){$q=db()->prepare("SELECT u.id user_id,u.name,MAX(m.created_at) last_message_at,(SELECT body FROM messages x WHERE ((x.sender_id=? AND x.receiver_id=u.id) OR (x.sender_id=u.id AND x.receiver_id=?)) ORDER BY x.id DESC LIMIT 1) last_message FROM users u JOIN messages m ON ((m.sender_id=? AND m.receiver_id=u.id) OR (m.sender_id=u.id AND m.receiver_id=?)) WHERE u.id<>? GROUP BY u.id,u.name ORDER BY last_message_at DESC");$q->execute([$me['id'],$me['id'],$me['id'],$me['id'],$me['id']]);respond(['conversations'=>$q->fetchAll()]);}
+respond(['error'=>'Method not allowed'],405);

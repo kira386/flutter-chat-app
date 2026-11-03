@@ -1,5 +1,3 @@
-# flutter-chat-app
-flutter-php chat application
 # PingLine Chat
 
 A Flutter chat client with a PHP/MySQL REST backend. The starter implements account registration,
